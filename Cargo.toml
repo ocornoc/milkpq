@@ -5,6 +5,7 @@ authors = ["Grayson Burton <ocornoc@protonmail.com>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
 description = "A concurrent, relaxed priority queue"
+repository = "https://github.com/ocornoc/milkpq"
 
 [dependencies]
 num_cpus = "1.13"
