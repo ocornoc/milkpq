@@ -120,8 +120,8 @@ fn once_bench(c: &mut Criterion, mpq: &MPQ, name: &'static str) {
 }
 
 fn pop_bench(c: &mut Criterion, mpq: &MPQ, name: &'static str) {
-    let pops = 5000;
-    let mut group = c.benchmark_group("Pop only");
+    let pops = 10000;
+    let mut group = c.benchmark_group("Pop 10K elements");
 
     group.bench_with_input(
         BenchmarkId::new("Sequential", "Empty MilkPQ"),
@@ -147,8 +147,8 @@ fn pop_bench(c: &mut Criterion, mpq: &MPQ, name: &'static str) {
 }
 
 fn strong_pop_bench(c: &mut Criterion, mpq: &MPQ, name: &'static str) {
-    let pops = 5000;
-    let mut group = c.benchmark_group("Strong pop only");
+    let pops = 10000;
+    let mut group = c.benchmark_group("Strong pop 10K elements");
 
     group.bench_with_input(
         BenchmarkId::new("Sequential", "Empty MilkPQ"),
@@ -174,7 +174,7 @@ fn strong_pop_bench(c: &mut Criterion, mpq: &MPQ, name: &'static str) {
 }
 
 fn push_bench(c: &mut Criterion, mpq: &MPQ, insert: &Vec<i32>, name: &'static str) {
-    let mut group = c.benchmark_group("Push only");
+    let mut group = c.benchmark_group("Push 10K elements");
 
     group.bench_with_input(
         BenchmarkId::new("Sequential", "Empty MilkPQ"),
@@ -201,7 +201,7 @@ fn push_bench(c: &mut Criterion, mpq: &MPQ, insert: &Vec<i32>, name: &'static st
 
 fn mix_bench(c: &mut Criterion, mpq: &MPQ, insert: &Vec<i32>, name: &'static str) {
     let pops = insert.len();
-    let mut group = c.benchmark_group("Mixed Pop/Push");
+    let mut group = c.benchmark_group("Mixed Pop/Push 10K elements");
 
     group.bench_with_input(
         BenchmarkId::new("SPSC single thead", "Empty MilkPQ"),
