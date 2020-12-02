@@ -269,6 +269,7 @@ fn test(c: &mut Criterion) {
     once_bench(c, &mpq, name);
     pop_bench(c, &mpq, name);
     strong_pop_bench(c, &mpq, name);
+    push_bench(c, &mpq, &vs, name);
     mix_bench(c, &mpq, &vs, name);
 }
 
