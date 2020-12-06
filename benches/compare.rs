@@ -234,7 +234,7 @@ where
             |b, pq| b.iter_batched_ref(
                 || pq.clone(),
                 |pq| pq.once_pop(),
-                BatchSize::SmallInput,
+                BatchSize::LargeInput,
             ),
         );
     }
@@ -265,7 +265,7 @@ where
             |b, pq| b.iter_batched_ref(
                 || pq.clone(),
                 |pq| pq.once_strong_pop(),
-                BatchSize::SmallInput,
+                BatchSize::LargeInput,
             ),
         );
     }
