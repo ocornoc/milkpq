@@ -137,7 +137,7 @@ impl PQueue<usize> for MPQ {
     }
 
     fn strong_pop(&self) -> Option<usize> {
-        self.pop()
+        self.strong_pop()
     }
 
     fn push(&self, t: usize) {
