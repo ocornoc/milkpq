@@ -6,7 +6,7 @@ use parking_lot::Mutex;
 use rand::prelude::*;
 use criterion::{
     Criterion, criterion_group, criterion_main, BenchmarkId, BenchmarkGroup,
-    measurement::Measurement, BatchSize,
+    measurement::Measurement, BatchSize, PlotConfiguration, AxisScale::Logarithmic,
 };
 
 type MPQ = MilkPQ<usize>;
@@ -137,7 +137,7 @@ impl PQueue<usize> for MPQ {
     }
 
     fn strong_pop(&self) -> Option<usize> {
-        self.pop()
+        self.strong_pop()
     }
 
     fn push(&self, t: usize) {
@@ -165,8 +165,15 @@ impl PQueue<usize> for SPQ {
     }
 }
 
-const SIZES: &[usize] = &[0, 1, 5, 10, 100, 500, 1_000, 5_000, 10_000, 50_000, 100_000];
-const BIG_THRESHOLD: usize = 8;
+const SIZES: &[usize] = &[
+    0, 1, 2, 3, 4, 5,
+    10, 15, 20, 50, 80,
+    100, 150, 200, 500, 800, 
+    1000, 1500, 2000, 5000, 8000,
+    10000, 15000, 20000, 50000, 80000,
+    100000,
+];
+const BIG_THRESHOLD: usize = 23;
 
 fn push_once_bench<T, M, PQ>(group: &mut BenchmarkGroup<M>)
 where
@@ -264,23 +271,27 @@ where
     }
 }
 
-fn compare(c: &mut Criterion) {
+fn compare_once(c: &mut Criterion) {
+    let pc = PlotConfiguration::default().summary_scale(Logarithmic);
     {
         let mut group = c.benchmark_group("Push once");
+        group.plot_config(pc.clone());
         push_once_bench::<_, _, MPQ>(&mut group);
         push_once_bench::<_, _, SPQ>(&mut group);
     }
     {
         let mut group = c.benchmark_group("Pop once");
+        group.plot_config(pc.clone());
         pop_once_bench::<_, _, MPQ>(&mut group);
         pop_once_bench::<_, _, SPQ>(&mut group);
     }
     {
         let mut group = c.benchmark_group("Strong pop once");
+        group.plot_config(pc.clone());
         spop_once_bench::<_, _, MPQ>(&mut group);
         spop_once_bench::<_, _, SPQ>(&mut group);
     }
 }
 
-criterion_group!(benches, compare);
+criterion_group!(benches, compare_once);
 criterion_main!(benches);
